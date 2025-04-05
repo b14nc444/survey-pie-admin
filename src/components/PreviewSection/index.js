@@ -1,12 +1,18 @@
+import AddButton from '../AddButton';
+import Body from '../Body';
 import Card from '../Card';
 
-function PreviewSection({ questions }) {
+function PreviewSection({ questions, addQuestion }) {
   return (
     <div>
       {' '}
       {questions.map((question, index) => (
-        <Card key={index} title={question.title} desc={question.desc} children="body" />
+        <Card key={index} title={question.title} desc={question.desc} children="body">
+          {' '}
+          <Body type={question.type} options={question.options} />{' '}
+        </Card>
       ))}{' '}
+      <AddButton onClick={addQuestion} />{' '}
     </div>
   );
 }
