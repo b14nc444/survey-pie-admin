@@ -31,7 +31,7 @@ function PreviewSection({
           <Body type={question.type} options={question.options} />{' '}
         </Card>
       ))}{' '}
-      <AddButton onClick={addQuestion} />{' '}
+      <AddButton addQuestion={addQuestion} />{' '}
     </div>
   );
 }
