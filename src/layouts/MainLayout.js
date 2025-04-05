@@ -1,24 +1,25 @@
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import React, { useState } from 'react';
+import { Layout, Menu } from 'antd';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+
 const { Header, Content, Sider } = Layout;
 
-function getItem(label, key, children) {
+function getItem(label, key, path) {
   return {
     key,
-    children,
-    label,
+    label: path ? <Link to={path}> {label} </Link> : label,
   };
 }
-const items = [getItem('설문조사 관리', <PieChartOutlined />)];
+
+const items = [
+  getItem('설문조사 목록', 'list', '/list'),
+  //   getItem('설문조사 생성', 'builder', '/builder'),
+];
 
 function MainLayout({ children }) {
+  const location = useLocation();
+  const selectedKey = location.pathname === '/' ? 'list' : location.pathname.substring(1);
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider>
@@ -30,10 +31,17 @@ function MainLayout({ children }) {
             background: 'rgba(255, 255, 255, 0.3)',
           }}
         />{' '}
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />{' '}
+        <Menu
+          theme="dark"
+          defaultSelectedKeys={['list']}
+          selectedKeys={[selectedKey]}
+          mode="inline"
+          items={items}
+        />{' '}
       </Sider>{' '}
       <Layout>
-        <Header /> <Content> {children} </Content>{' '}
+        <Header />
+        <Content style={{ margin: '16px' }}> {children} </Content>{' '}
       </Layout>{' '}
     </Layout>
   );
