@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   data: null,
@@ -66,6 +66,19 @@ export const surveySlice = createSlice({
     },
   },
 });
+
+// Selectors
+export const selectSurveyData = (state) => state.survey.data;
+export const selectSurveyLoading = (state) => state.survey.loading;
+export const selectSurveyError = (state) => state.survey.error;
+
+export const selectSurveyTitle = createSelector([selectSurveyData], (data) =>
+  data && data.title ? data.title : ''
+);
+
+export const selectSurveyQuestions = createSelector([selectSurveyData], (data) =>
+  data && data.questions ? data.questions : []
+);
 
 export const {
   setTitle,
